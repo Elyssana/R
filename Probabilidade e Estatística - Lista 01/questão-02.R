@@ -35,24 +35,40 @@ barplot(obito.municipio,
 #idade um intervalo de classe de 10 anos. 
 
 
+interClasses <- c(0 , 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110)
+idade.cut <- cut(pacientes$idade[pacientes$situacao_atual == "Óbito" & pacientes$sexo != "Mascuino"], breaks = interClasses, right = FALSE)
+
+
+sexo.idade.tb <- table(pacientes$sexo[pacientes$situacao_atual == "Óbito" & pacientes$sexo != "Mascuino"], idade.cut); sexo.idade.tb
+#sexo.idade.tb <- 
+barplot(sexo.idade.tb,
+        main = "Número de óbitos por sexo e idade",
+        ylim = c(0,800),
+        ylab = "Nº de óbitos",
+        xlab = "Idade",
+        col = c("darkgreen", "darkorange"),
+        legend.text = c("Mulheres", "Homens"),
+        beside = TRUE)
 
 
 ##D) Gráfico de óbitos por idade (histograma).
-obito.idade <- table(pacientes$idade[pacientes$situacao_atual == "Óbito" & pacientes$idade > 0 ])
+obito.idade <- (pacientes$idade[pacientes$situacao_atual == "Óbito" & pacientes$idade > 0])
+
 hist(obito.idade,
-       # ylim = c(0,2500),
         col = ("red"),
-        main = "Óbitos por idade",
+        ylim = c(0,1500),
+        xlim = c(0,120),
+        labels = TRUE,
+        right = FALSE,
+        main = "Histograma óbitos por idade",
         xlab = "idade",
         ylab = "Mortes")
 
-barplot(obito.idade,
-       # ylim = c(0,2500),
-        col = ("red"),
-        main = "Óbitos por idade",
-        xlab = "idade",
-        ylab = "Mortes")
 
+situacao = subset(pacientes, situacao_atual="Óbito")
+idadeteste<-situacao$idade
+
+hist(idadeteste)
 
 ##E) Gráfico de barras, representando o número de óbitos por mês
 meses <- c("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", 
