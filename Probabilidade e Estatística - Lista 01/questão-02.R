@@ -31,11 +31,12 @@ barplot(obito.municipio,
 #A maior parte dos óbitos do estado de Alagoas ocorreram na capital.
 
 
-##C) Gráfico representando o número de óbitos por sexo e idade. Considere para a 
+##2.C) Gráfico representando o número de óbitos por sexo e idade. Considere para a 
 #idade um intervalo de classe de 10 anos. 
 
 
 interClasses <- c(0 , 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110)
+
 idade.cut <- cut(pacientes$idade[pacientes$situacao_atual == "Óbito" & pacientes$sexo != "Mascuino"], breaks = interClasses, right = FALSE)
 
 
@@ -46,7 +47,7 @@ barplot(sexo.idade.tb,
         ylim = c(0,800),
         ylab = "Nº de óbitos",
         xlab = "Idade",
-        col = c("darkgreen", "darkorange"),
+        col = c("darkorange", "darkgreen"),
         legend.text = c("Mulheres", "Homens"),
         beside = TRUE)
 
