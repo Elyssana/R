@@ -12,8 +12,8 @@ barplot(sort(tabela.situação),
         col = ("yellow"),
         main = "Situação atual dos pacientes",
         xlab = "Situação",
-        ylab = "Nº de pacientes"
-        )
+        ylab = "Nº de pacientes")
+
 #-Mais de 150.000 pacientes estão isolamento domiciliar
 
 
@@ -41,7 +41,7 @@ idade.cut <- cut(pacientes$idade[pacientes$situacao_atual == "Óbito" & pacientes
 
 
 sexo.idade.tb <- table(pacientes$sexo[pacientes$situacao_atual == "Óbito" & pacientes$sexo != "Mascuino"], idade.cut); sexo.idade.tb
-#sexo.idade.tb <- 
+
 barplot(sexo.idade.tb,
         main = "Número de óbitos por sexo e idade",
         ylim = c(0,800),
@@ -66,12 +66,30 @@ hist(obito.idade,
         ylab = "Mortes")
 
 
-situacao = subset(pacientes, situacao_atual="Óbito")
-idadeteste<-situacao$idade
 
-hist(idadeteste)
 
 ##E) Gráfico de barras, representando o número de óbitos por mês
-meses <- c("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", 
-           "Jul", "Ago", "Set", "Out", "Nov", "Dez")
-dados["MesEdit"] <- paste(dados$Ano, "-", meses[dados$Mes])
+
+data <- as.character(pacientes$data_resultado_exame)
+
+mes <- substr(data, 6,7)
+
+ano <- substr(data, 1, 4)
+
+pacientes["mês"] <- mes
+pacientes["ano"] <- ano
+
+
+pacientes["mes_ano"] <- paste( pacientes$ano,"/",pacientes$mês)
+
+mes.ano <- pacientes$mes_ano[pacientes$situacao_atual == "Óbito" &
+                                     pacientes$mês != "NA" &
+                                     pacientes$ano >= 2020 &
+                                     pacientes$ano <= 2021]
+#table(mes.ano)
+
+barplot(table(mes.ano), 
+        ylim = c(0,1000),
+        las=2,
+        main = "Número de óbitos por mês",
+        col = ("darkred"))
